@@ -9,11 +9,11 @@ secret = 'qeualuw1pb8pntu7fxqauxf20oqjq94'
 client = Wubytes::Client.new(key, secret, :site => 'http://localhost:9292')
 
 get '/' do
-  redirect client.authorize_url(:redirect_uri => 'http://sina.tra/oauth2/callback', scope: 'read write')
+  redirect client.auth_code_authorize_url(:redirect_uri => 'http://sina.tra/oauth2/callback', scope: 'read write')
 end
 
 get '/oauth2/callback' do
-  token = client.get_token(params[:code], :redirect_uri => 'http://sina.tra/oauth2/callback')
+  token = client.auth_code_get_token(params[:code], :redirect_uri => 'http://sina.tra/oauth2/callback')
   redirect 'http://sina.tra/with_token?token=%s' % token.token
 end
 
