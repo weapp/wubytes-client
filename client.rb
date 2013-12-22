@@ -27,10 +27,12 @@ get '/with_token' do
     },
     err: token.get('/api/err'),
     me: token.get('/api/me'),
+    #post: token.post('/api/wbs', params: {data: 3, title: 'example-title', slug: 'example-title'}),
     q: token.get('/api/wbs', params: {q: "weapp:titulo,manu:asf,asf-2"})
+
   }
 
-  user = response[:me]["slug"]
+  user = response[:me]["id"]
 
   response[:me_wbs] = token.get('/api/users/%s/wbs' % user)
 
