@@ -12,12 +12,17 @@ client = Wubytes::Client.new(key, secret, :site => 'http://localhost:9292')
 # get the token params in the callback and
 #token = OAuth2::AccessToken.from_kvform(client, query_string)
 
-print "email: "
-email = gets.strip
+#print "email: "
+# email = "weapp@hotmail.com" # gets.strip
+email = "weap88@gmail.com" # gets.strip
 print "password: "
 password = gets.strip
 
-token = client.password_get_token(email, password)
+client.connection.response :logger
+
+token = client.password_get_token(email, password, scope: 'read write')
+# token = client.token_from_string(token.token)
+
 
 response = {
   datetime: {
@@ -37,5 +42,6 @@ user = response[:me]["id"]
 
 #response[:wbs] = token.get('/api/wbs')
 
+response[:put] = token.put("/api/users/#{user}/wbs/title", params: {data: 3, title: 'new_title'})
 
 pp response
